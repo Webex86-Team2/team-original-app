@@ -9,7 +9,7 @@ export default function Navbar() {
           <Link to="/myprofile">プロフィール</Link>
         </li>
         <li>
-          <Link to="/likes">届いたいいね</Link>
+          <Link to="/favorite">届いたいいね</Link>
         </li>
         <li>
           <Link to="/recommend">おすすめ</Link>

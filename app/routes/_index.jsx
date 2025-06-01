@@ -21,7 +21,7 @@ export default function Index() {
         <Link to="/myprofile" className="home-button">
           👤 プロフィール
         </Link>
-        <Link to="/likes" className="home-button">
+        <Link to="/favorite" className="home-button">
           ❤️ 届いたいいね
         </Link>
         <Link to="/recommend" className="home-button">
