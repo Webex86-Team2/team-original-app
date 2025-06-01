@@ -15,8 +15,10 @@ export default function Chat() {
     { sender: "Aさん", text: "こんにちは！", iconUrl: "/icons/user-a.png" },
     {
       sender: "自分",
-      text: "はじめまして🌸",
-      iconUrl: localStorage.getItem("photoUrl") || "/icons/me.png",
+      text: "はじめまして☺️",
+      iconUrl:
+        localStorage.getItem("photoUrl") ||
+        "https://cdn-icons-png.flaticon.com/512/3940/3940403.png",
     },
   ]);
 
@@ -24,9 +26,13 @@ export default function Chat() {
 
   const handleSend = () => {
     if (!input.trim()) return;
+    const messageWithEmoji = input.trim().endsWith("☺️")
+      ? input.trim()
+      : input.trim() + "☺️";
+
     setMessages((prev) => [
       ...prev,
-      { sender: "自分", text: input, iconUrl: myIcon },
+      { sender: "自分", text: messageWithEmoji, iconUrl: myIcon },
     ]);
     setInput("");
   };

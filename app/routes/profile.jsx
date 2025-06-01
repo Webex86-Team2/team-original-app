@@ -55,13 +55,17 @@ export default function Profile() {
     reader.readAsDataURL(file);
   };
 
-  // 保存して表示画面へ
   const handleSave = () => {
     localStorage.setItem("myProfile", JSON.stringify(profile));
+
+    // プロフィール画像だけも別で保存（チャットなど別画面でも使えるように）
+    if (profile.photoUrl) {
+      localStorage.setItem("photoUrl", profile.photoUrl);
+    }
+
     alert("プロフィールを保存しました！");
     navigate("/myprofile");
   };
-
   return (
     <div className="profile-container">
       <h1>プロフィール編集</h1>
