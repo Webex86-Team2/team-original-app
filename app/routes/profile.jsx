@@ -1,59 +1,64 @@
 import { useEffect, useState } from "react";
-import { db } from "../firebase";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { useNavigate } from "@remix-run/react";
 import "../styles/profile.css";
 
+// 英語キー → 日本語ラベルの対応表
+const labelMap = {
+  name: "名前",
+  hometown: "出身地",
+  mbti: "MBTI",
+  university: "大学",
+  photoUrl: "プロフィール画像",
+  Course: "コース",
+  Role: "役職",
+  hobbies: "趣味",
+};
+
 export default function Profile() {
-  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
+
   const [profile, setProfile] = useState({
     name: "",
     hometown: "",
     mbti: "",
     university: "",
+    photoUrl: "",
     Course: "",
-    careerHistory: "",
+    Role: "",
     hobbies: "",
-    inOrOut: "",
   });
 
+  // localStorageからデータ読み込み
   useEffect(() => {
-    const uid = localStorage.getItem("uid");
-    if (uid) {
-      setUserId(uid);
-      loadProfile(uid);
+    const saved = localStorage.getItem("myProfile");
+    if (saved) {
+      setProfile(JSON.parse(saved));
     }
   }, []);
 
-  const loadProfile = async (uid) => {
-    const docRef = doc(db, "profiles", uid);
-    const snap = await getDoc(docRef);
-    if (snap.exists()) {
-      setProfile(snap.data());
-    }
-  };
-
+  // 入力の変更
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
 
-  const handleSave = async () => {
-    if (!userId) return alert("ログイン情報がありません");
-    const ref = doc(db, "profiles", userId);
-    await setDoc(ref, profile);
-    alert("プロフィールを保存しました！");
-  };
-
+  // 写真アップロード
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
     if (!file) return;
     const reader = new FileReader();
     reader.onloadend = () => {
-      setProfile((prev) => ({
-        ...prev,
-        photoUrl: reader.result,
-      }));
+      setProfile({
+        ...profile,
+      });
     };
     reader.readAsDataURL(file);
+  };
+
+  // 保存して表示画面へ
+  const handleSave = () => {
+    localStorage.setItem("myProfile", JSON.stringify(profile));
+    alert("プロフィールを保存しました！");
+    navigate("/myprofile");
   };
 
   return (
@@ -61,13 +66,8 @@ export default function Profile() {
       <h1>プロフィール編集</h1>
 
       <div className="profile-field">
-        <label htmlFor="avatar">プロフィール画像を選ぶ</label>
-        <input
-          type="file"
-          accept="image/*"
-          name="avatar"
-          onChange={handlePhotoUpload}
-        />
+        <label htmlFor="name">プロフィール画像を選ぶ</label>
+        <input type="file" accept="image/*" onChange={handlePhotoUpload} />
       </div>
 
       {profile.photoUrl && (
@@ -78,24 +78,18 @@ export default function Profile() {
         />
       )}
 
-      {[
-        "名前",
-        "出身地",
-        "MBTI",
-        "大学",
-        "コース",
-        "役職",
-        "趣味",
-        "アピール",
-      ].map((key) => (
-        <div className="profile-field" key={key}>
-          <label>{key}</label>
-          <input name={key} value={profile[key]} onChange={handleChange} />
-        </div>
-      ))}
+      {Object.entries(profile).map(
+        ([key, value]) =>
+          key !== "photoUrl" && (
+            <div className="profile-field" key={key}>
+              <label>{labelMap[key] || key}</label>
+              <input name={key} value={value} onChange={handleChange} />
+            </div>
+          )
+      )}
 
       <button className="save-button" onClick={handleSave}>
-        保存
+        保存して表示ページへ
       </button>
     </div>
   );

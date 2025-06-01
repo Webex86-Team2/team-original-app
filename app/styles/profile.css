@@ -69,3 +69,11 @@
 .profile-container {
   font-family: "M PLUS Rounded 1c", system-ui, sans-serif;
 }
+.profile-display p {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+  background-color: #fffdf7;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border-left: 5px solid #ffcc80;
+}
