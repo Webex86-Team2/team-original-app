@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "@remix-run/react";
 import "../styles/profile.css";
+import Navbar from "../components/Navbar";
 
-// 英語キー → 日本語ラベルの対応表
 const labelMap = {
   name: "名前",
   hometown: "出身地",
@@ -15,6 +16,7 @@ const labelMap = {
 
 export default function MyProfile() {
   const [profile, setProfile] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const saved = localStorage.getItem("myProfile");
@@ -32,27 +34,39 @@ export default function MyProfile() {
   }
 
   return (
-    <div className="profile-container">
-      <h1>マイプロフィール</h1>
+    <div>
+      <Navbar />
+      <div className="profile-container">
+        <h1>マイプロフィール</h1>
 
-      {profile.photoUrl && (
-        <img
-          src={profile.photoUrl}
-          alt="プロフィール画像"
-          className="profile-photo"
-        />
-      )}
-
-      <div className="profile-display">
-        {Object.entries(profile).map(
-          ([key, value]) =>
-            key !== "photoUrl" && (
-              <p key={key}>
-                <strong>{labelMap[key] || key}：</strong>{" "}
-                {value || "（未入力）"}
-              </p>
-            )
+        {profile.photoUrl && (
+          <img
+            src={profile.photoUrl}
+            alt="プロフィール画像"
+            className="profile-photo"
+          />
         )}
+
+        <div className="profile-display">
+          {Object.entries(profile).map(
+            ([key, value]) =>
+              key !== "photoUrl" && (
+                <p key={key}>
+                  <strong>{labelMap[key] || key}：</strong>{" "}
+                  {value || "（未入力）"}
+                </p>
+              )
+          )}
+        </div>
+
+        <button
+          className="edit-button"
+          onClick={() => {
+            navigate("/profile");
+          }}
+        >
+          ✏️ 編集する
+        </button>
       </div>
     </div>
   );

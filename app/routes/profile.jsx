@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@remix-run/react";
 import "../styles/profile.css";
+import Navbar from "../components/Navbar";
 
 // 英語キー → 日本語ラベルの対応表
 const labelMap = {
@@ -67,35 +68,38 @@ export default function Profile() {
     navigate("/myprofile");
   };
   return (
-    <div className="profile-container">
-      <h1>プロフィール編集</h1>
+    <div>
+      <Navbar />
+      <div className="profile-container">
+        <h1>プロフィール編集</h1>
 
-      <div className="profile-field">
-        <label htmlFor="name">プロフィール画像を選ぶ</label>
-        <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+        <div className="profile-field">
+          <label htmlFor="name">プロフィール画像を選ぶ</label>
+          <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+        </div>
+
+        {profile.photoUrl && (
+          <img
+            src={profile.photoUrl}
+            alt="プロフィール画像"
+            className="profile-photo"
+          />
+        )}
+
+        {Object.entries(profile).map(
+          ([key, value]) =>
+            key !== "photoUrl" && (
+              <div className="profile-field" key={key}>
+                <label>{labelMap[key] || key}</label>
+                <input name={key} value={value} onChange={handleChange} />
+              </div>
+            )
+        )}
+
+        <button className="save-button" onClick={handleSave}>
+          保存して表示ページへ
+        </button>
       </div>
-
-      {profile.photoUrl && (
-        <img
-          src={profile.photoUrl}
-          alt="プロフィール画像"
-          className="profile-photo"
-        />
-      )}
-
-      {Object.entries(profile).map(
-        ([key, value]) =>
-          key !== "photoUrl" && (
-            <div className="profile-field" key={key}>
-              <label>{labelMap[key] || key}</label>
-              <input name={key} value={value} onChange={handleChange} />
-            </div>
-          )
-      )}
-
-      <button className="save-button" onClick={handleSave}>
-        保存して表示ページへ
-      </button>
     </div>
   );
 }
