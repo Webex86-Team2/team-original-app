@@ -31,3 +31,11 @@ export default function App() {
 export function HydrateFallback() {
   return <p>Loading...</p>;
 }
+export const links = () => {
+  return [
+    {
+      rel: "stylesheet",
+      href: "https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap",
+    },
+  ];
+};

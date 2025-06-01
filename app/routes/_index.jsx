@@ -1,30 +1,37 @@
+import { Link } from "@remix-run/react";
+
 export const meta = () => {
   return [
-    { title: "New Remix SPA" },
-    { name: "description", content: "Welcome to Remix (SPA Mode)!" },
+    { title: "プロフィールマッチングアプリ" },
+    { name: "description", content: "プロフィール入力ページに進みましょう！" },
   ];
 };
 
 export default function Index() {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Remix (SPA Mode)</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/guides/spa-mode"
-            rel="noreferrer"
-          >
-            SPA Mode Guide
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div
+      style={{
+        fontFamily: "system-ui, sans-serif",
+        padding: "2rem",
+        textAlign: "center",
+      }}
+    >
+      <h1>ようこそ！</h1>
+      <p>このアプリではプロフィールを入力してマッチングできます。</p>
+      <Link
+        to="/profile"
+        style={{
+          display: "inline-block",
+          marginTop: "1rem",
+          padding: "0.75rem 1.5rem",
+          backgroundColor: "#4CAF50",
+          color: "white",
+          borderRadius: "8px",
+          textDecoration: "none",
+        }}
+      >
+        ▶ プロフィールを編集する
+      </Link>
     </div>
   );
 }
