@@ -2,6 +2,7 @@ import { useState } from "react";
 import "../styles/auth/sign-up.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { Link } from "@remix-run/react";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -51,7 +52,7 @@ export default function SignUp() {
             新規登録
           </button>
         </form>
-        <p>ログインはこちら</p>
+        <Link to="/sign-in">ログインはこちら</Link>
       </div>
     </div>
   );

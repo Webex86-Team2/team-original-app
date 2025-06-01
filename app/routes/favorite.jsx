@@ -1,5 +1,5 @@
 import Mentor from "../components/Mentor";
-import asai from "../image/asai.png";
+import asai from "../image/asai2.png";
 import kossy from "../image/kossy.png";
 import "../styles/favorite.css";
 
@@ -7,11 +7,14 @@ export default function Favorite() {
   const mentors = [
     {
       name: "朝井遼太",
+      hometown: "東京",
+      age: "23",
+      mbti: "INFP",
+      university: "法政大学",
       img: asai,
       course: "UIUX",
-      age: 23,
+      role: "HR統括",
       hobbies: ["バスケ", "アニメ", "漫画"],
-      type: "??",
     },
   ];
 
