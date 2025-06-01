@@ -9,8 +9,8 @@ const labelMap = {
   mbti: "MBTI",
   university: "大学",
   photoUrl: "プロフィール画像",
-  Course: "コース",
-  Role: "役職",
+  Course: "プログラミングコース",
+  Role: "役職遍歴",
   hobbies: "趣味",
 };
 
@@ -49,6 +49,7 @@ export default function Profile() {
     reader.onloadend = () => {
       setProfile({
         ...profile,
+        photoUrl: reader.result,
       });
     };
     reader.readAsDataURL(file);
