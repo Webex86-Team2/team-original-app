@@ -2,36 +2,34 @@ import { Link } from "@remix-run/react";
 
 export const meta = () => {
   return [
-    { title: "プロフィールマッチングアプリ" },
-    { name: "description", content: "プロフィール入力ページに進みましょう！" },
+    { title: "マッチングホーム" },
+    {
+      name: "description",
+      content: "プロフィールやチャットにアクセスできます。",
+    },
   ];
 };
 
 export default function Index() {
   return (
-    <div
-      style={{
-        fontFamily: "system-ui, sans-serif",
-        padding: "2rem",
-        textAlign: "center",
-      }}
-    >
+    <div className="home-container">
       <h1>ようこそ！</h1>
-      <p>このアプリではプロフィールを入力してマッチングできます。</p>
-      <Link
-        to="/profile"
-        style={{
-          display: "inline-block",
-          marginTop: "1rem",
-          padding: "0.75rem 1.5rem",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          borderRadius: "8px",
-          textDecoration: "none",
-        }}
-      >
-        ▶ プロフィールを編集する
-      </Link>
+      <p>このアプリでマッチングを楽しもう🌿</p>
+
+      <div className="home-buttons">
+        <Link className="home-button" to="/profile">
+          🧑‍💼 プロフィール編集
+        </Link>
+        <Link className="home-button" to="/likes">
+          ❤️ 届いたいいね
+        </Link>
+        <Link className="home-button" to="/recommend">
+          🌟 おすすめ
+        </Link>
+        <Link className="home-button" to="/chat">
+          💬 チャット
+        </Link>
+      </div>
     </div>
   );
 }

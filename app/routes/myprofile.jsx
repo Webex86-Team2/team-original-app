@@ -5,11 +5,11 @@ import "../styles/profile.css";
 const labelMap = {
   name: "名前",
   hometown: "出身地",
-  mbti: "MBTI",
   university: "大学",
+  mbti: "MBTI",
   photoUrl: "プロフィール画像",
-  Course: "プログラミングコース",
-  Role: "役職遍歴",
+  Course: "コース",
+  Role: "役職",
   hobbies: "趣味",
 };
 
