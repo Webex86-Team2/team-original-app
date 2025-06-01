@@ -61,9 +61,9 @@
   margin: 1.5rem auto;
   width: 140px;
   height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ffcc80; /* 明るい柿色 */
+  border-radius: 50%; /*丸くしている*/
+  object-fit: cover; /* 画像の比率を保ったまま枠にぴったり収める */
+  border: 3px solid #ffcc80; /* 可愛い縁取り（柿色） */
   background-color: #fff;
 }
 .profile-container {
