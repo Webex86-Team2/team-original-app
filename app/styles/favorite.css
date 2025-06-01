@@ -1,0 +1,15 @@
+.asai {
+  background-color: rgb(250, 222, 245);
+  border: solid 2px;
+  padding: 20px;
+  width: 300px;
+  margin: 200px;
+}
+
+h1 {
+  text-align: center;
+}
+
+.mentor {
+  display: flex;
+}
