@@ -1,8 +1,65 @@
-.badge-top-pick{
-    display: flex
+/* 全体の余白とフォント調整 */
+body {
+  font-family: 'Helvetica', sans-serif;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-.badge-top-pick img{
-    height: 400px;
-    width: 300px;
+h1, h2 {
+  margin-bottom: 16px;
+}
+
+/* 上部のおすすめバッジ（大） */
+.badge-top-pick {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.badge-top-pick img {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* 下部のバッジ全体をグリッドで並べる */
+.all-badge-other-pick {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+}
+
+/* 各下部のバッジ */
+.badge-other-pick {
+    display: flex;
+    background-color: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.badge-other-pick:hover {
+    transform: translateY(-4px);
+}
+
+.badge-other-pick img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 12px;
+}
+
+.badge-other-pick p {
+    margin: 4px 0;
+    font-size: 14px;
 }
