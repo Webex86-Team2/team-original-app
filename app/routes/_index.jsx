@@ -33,7 +33,7 @@ export default function Index() {
       <p>気の合うお友達を見つけよう！🍀</p>
 
       <div className="home-buttons">
-        <Link to="/myprofile" className="home-button">
+        <Link to="/profile" className="home-button">
           👤 プロフィール
         </Link>
         <Link to="/favorite" className="home-button">
