@@ -1,0 +1,134 @@
+.profile-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff8e7; /* やさしいオレンジ背景 */
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Helvetica Neue", sans-serif;
+  color: #3a3a3a;
+}
+
+.profile-container h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: #e67e22;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.profile-field {
+  margin-bottom: 1.2rem;
+}
+
+.profile-field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+  color: #6b8e23; /* 黄緑（オリーブ） */
+}
+
+.profile-field input {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  background-color: #faf9f6;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  outline-color: #ffd54f; /* ソフトイエロー */
+}
+
+.save-button {
+  width: 100%;
+  background-color: #4caf50; /* グリーン */
+  color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.save-button:hover {
+  background-color: #3e8e41;
+}
+
+.profile-photo {
+  display: block;
+  margin: 1.5rem auto;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%; /*丸くしている*/
+  object-fit: cover; /* 画像の比率を保ったまま枠にぴったり収める */
+  border: 3px solid #ffcc80; /* 可愛い縁取り（柿色） */
+  background-color: #fff;
+}
+.profile-container {
+  font-family: "M PLUS Rounded 1c", system-ui, sans-serif;
+}
+.profile-display p {
+  font-size: 1.1rem;
+  margin-bottom: 0.6rem;
+  background-color: #fffdf7;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border-left: 5px solid #ffcc80;
+}
+.home-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff8e7;
+  background-image: url("https://www.transparenttextures.com/patterns/leaf.png");
+  background-repeat: repeat;
+  border-radius: 16px;
+  text-align: center;
+  font-family: "M PLUS Rounded 1c", system-ui, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.home-container h1 {
+  font-size: 2rem;
+  color: #e67e22;
+  margin-bottom: 1rem;
+}
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.home-button {
+  display: block;
+  padding: 1rem;
+  background-color: #ffcc80;
+  color: #3a3a3a;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: background-color 0.3s;
+}
+
+.home-button:hover {
+  background-color: #ffa726;
+}
+.edit-button {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #ffbd59;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #f4a236;
+}

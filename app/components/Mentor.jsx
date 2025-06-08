@@ -1,23 +1,20 @@
 const Mentor = ({ mentor }) => {
   return (
-    <div className="asai">
-      <div>名前：{mentor.name}</div>
-      <img src={mentor.img} alt="asai" />
-      <div>出身地：{mentor.hometown}</div>
-      <div>MBTI：{mentor.mbti}</div>
-      <div>大学：{mentor.university}</div>
-
-      <div>コース：{mentor.course}コース</div>
-      <div>役職：{mentor.role}</div>
-      <div>年齢：{mentor.age}歳</div>
-      <div>
-        趣味：
-        <div>
-          {mentor.hobbies.map((hobby, index) => (
-            <div key={index}>{hobby}</div>
-          ))}
-        </div>
-      </div>
+    <div className="mentor-card">
+      <img src={mentor.img} alt={mentor.name} className="mentor-img" />
+      <h2>{mentor.name}</h2>
+      <p>出身地：{mentor.hometown}</p>
+      <p>MBTI：{mentor.mbti}</p>
+      <p>大学：{mentor.university}</p>
+      <p>コース：{mentor.course} コース</p>
+      <p>役職：{mentor.role}</p>
+      <p>年齢：{mentor.age}歳</p>
+      <p>趣味：</p>
+      <ul>
+        {mentor.hobbies.map((hobby, index) => (
+          <li key={index}>{hobby}</li>
+        ))}
+      </ul>
     </div>
   );
 };
