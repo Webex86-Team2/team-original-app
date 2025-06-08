@@ -1,29 +1,10 @@
-.asai {
-  background-color: #fef9e7; /* 優しいクリーム色 */
-  border: 2px dashed #f7c5cc;
-  border-radius: 20px;
-  padding: 20px;
-  width: 330px;
-  margin: 40px auto;
-  box-shadow: 0 4px 8px rgba(255, 192, 203, 0.4);
-  font-family: "Hiragino Maru Gothic ProN", "Comic Sans MS", "cursive",
-    sans-serif;
-  transition: transform 0.3s ease;
+.favorite {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px 100px;
 }
 
-.asai:hover {
-  transform: scale(1.05);
-}
-
-.asai div {
-  background-color: white; /* 各項目の背景を白に */
-  margin: 6px 0;
-  padding: 6px 10px;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
+.favorite h1 {
   text-align: center;
   color: #ff7f9f;
   font-family: "Hiragino Maru Gothic ProN", sans-serif;
@@ -31,9 +12,8 @@ h1 {
   margin-bottom: 30px;
 }
 
-.mentor {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
 }
