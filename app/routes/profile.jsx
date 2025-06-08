@@ -1,19 +1,38 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "@remix-run/react";
 import "../styles/profile.css";
 import Navbar from "../components/Navbar";
 
-// 英語キー → 日本語ラベルの対応表
-const labelMap = {
-  name: "名前",
-  hometown: "出身地",
-  mbti: "MBTI",
-  university: "大学",
-  photoUrl: "プロフィール画像",
-  Course: "プログラミングコース",
-  Role: "役職遍歴",
-  hobbies: "趣味",
-};
+const profileFields = [
+  {
+    key: "name",
+    label: "名前",
+  },
+  {
+    key: "hometown",
+    label: "出身地",
+  },
+  {
+    key: "mbti",
+    label: "MBTI",
+  },
+  {
+    key: "university",
+    label: "大学",
+  },
+  {
+    key: "course",
+    label: "コース",
+  },
+  {
+    key: "role",
+    label: "役職",
+  },
+  {
+    key: "hobbies",
+    label: "趣味",
+  },
+];
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -28,19 +47,6 @@ export default function Profile() {
     Role: "",
     hobbies: "",
   });
-
-  // localStorageからデータ読み込み
-  useEffect(() => {
-    const saved = localStorage.getItem("myProfile");
-    if (saved) {
-      setProfile(JSON.parse(saved));
-    }
-  }, []);
-
-  // 入力の変更
-  const handleChange = (e) => {
-    setProfile({ ...profile, [e.target.name]: e.target.value });
-  };
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -58,16 +64,10 @@ export default function Profile() {
   };
 
   const handleSave = () => {
-    localStorage.setItem("myProfile", JSON.stringify(profile));
-
-    // プロフィール画像だけも別で保存（チャットなど別画面でも使えるように）
-    if (profile.photoUrl) {
-      localStorage.setItem("photoUrl", profile.photoUrl);
-    }
-
     alert("プロフィールを保存しました！");
     navigate("/myprofile");
   };
+
   return (
     <div>
       <Navbar />
@@ -87,15 +87,12 @@ export default function Profile() {
           />
         )}
 
-        {Object.entries(profile).map(
-          ([key, value]) =>
-            key !== "photoUrl" && (
-              <div className="profile-field" key={key}>
-                <label>{labelMap[key] || key}</label>
-                <input name={key} value={value} onChange={handleChange} />
-              </div>
-            )
-        )}
+        {profileFields.map((field) => (
+          <div className="profile-field" key={field.key}>
+            <label>{field.label}</label>
+            <input name={field.key} value={profile[field.key]} />
+          </div>
+        ))}
 
         <button className="save-button" onClick={handleSave}>
           保存して表示ページへ
