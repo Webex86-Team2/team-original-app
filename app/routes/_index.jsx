@@ -1,9 +1,12 @@
-import { Link } from "@remix-run/react";
-import "../styles/home.css"; // ← 追加
+import { useEffect } from "react";
+import { useNavigate, Link } from "@remix-run/react";
+import { auth } from "../firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import "../styles/home.css";
 
 export const meta = () => {
   return [
-    { title: "マッチングホーム" },
+    { title: "フレンドアプリ" },
     {
       name: "description",
       content: "プロフィールやチャットにアクセスできます。",
@@ -12,6 +15,18 @@ export const meta = () => {
 };
 
 export default function Index() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/sign-in"); // 未ログインならサインイン画面へ
+      }
+    });
+
+    return () => unsubscribe(); // クリーンアップ
+  }, [navigate]);
+
   return (
     <div className="home-container">
       <h1>ようこそ！</h1>
