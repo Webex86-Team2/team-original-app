@@ -3,6 +3,7 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import asai from "../image/asai.png";
 import Tag from "./tag/Tag";
 import { color } from "../utils/color";
+import { Link } from "@remix-run/react";
 
 export default function UserCard() {
   return (
@@ -29,7 +30,12 @@ export default function UserCard() {
             gap: 0.5,
           }}
         >
-          <Typography variant="h6">あさい</Typography>
+          <Link
+            to="/home/profile"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <Typography variant="h6">あさい</Typography>
+          </Link>
           <Typography
             variant="caption"
             color="text.secondary"
