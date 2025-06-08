@@ -1,39 +1,51 @@
-.asai {
+.favorite-page {
+  text-align: center;
+  padding: 2rem;
+}
+
+.mentor-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* 以前の .asai を汎用クラスに変更 */
+.mentor-card {
   background-color: #fef9e7; /* 優しいクリーム色 */
   border: 2px dashed #f7c5cc;
   border-radius: 20px;
   padding: 20px;
   width: 330px;
-  margin: 40px auto;
+  margin: 20px;
   box-shadow: 0 4px 8px rgba(255, 192, 203, 0.4);
   font-family: "Hiragino Maru Gothic ProN", "Comic Sans MS", "cursive",
     sans-serif;
   transition: transform 0.3s ease;
 }
 
-.asai:hover {
+.mentor-card:hover {
   transform: scale(1.05);
 }
 
-.asai div {
-  background-color: white; /* 各項目の背景を白に */
+.mentor-card div,
+.mentor-card h2,
+.mentor-card p,
+.mentor-card ul {
+  background-color: white;
   margin: 6px 0;
   padding: 6px 10px;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-  text-align: center;
-  color: #ff7f9f;
-  font-family: "Hiragino Maru Gothic ProN", sans-serif;
-  font-size: 28px;
-  margin-bottom: 30px;
+.mentor-card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 10px;
 }
 
-.mentor {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+.mentor-card ul {
+  list-style-type: none;
+  padding-left: 0;
 }
