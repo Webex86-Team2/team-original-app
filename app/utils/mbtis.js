@@ -1,0 +1,18 @@
+export const mbtis = [
+  { id: 0, name: "ISTJ（管理者）" },
+  { id: 1, name: "ISFJ（擁護者）" },
+  { id: 2, name: "INFJ（提唱者）" },
+  { id: 3, name: "INTJ（提唱者）" },
+  { id: 4, name: "ISTP（巨匠）" },
+  { id: 5, name: "ISFP（冒険家）" },
+  { id: 6, name: "INFP（仲介者）" },
+  { id: 7, name: "INTP（論理学者）" },
+  { id: 8, name: "ESTP（起業家）" },
+  { id: 9, name: "ESFP（エンターテイナー）" },
+  { id: 10, name: "ENFP（運動家）" },
+  { id: 11, name: "ENTP（討論者）" },
+  { id: 12, name: "ESTJ（幹部）" },
+  { id: 13, name: "ESFJ（領事）" },
+  { id: 14, name: "ENFJ（主人公）" },
+  { id: 15, name: "ENTJ（指揮官）" },
+];

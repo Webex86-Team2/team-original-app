@@ -9,29 +9,10 @@ export const meta = () => {
 
 export default function Index() {
   return (
-    <div
-      style={{
-        fontFamily: "system-ui, sans-serif",
-        padding: "2rem",
-        textAlign: "center",
-      }}
-    >
-      <h1>ようこそ！</h1>
-      <p>このアプリではプロフィールを入力してマッチングできます。</p>
-      <Link
-        to="/profile"
-        style={{
-          display: "inline-block",
-          marginTop: "1rem",
-          padding: "0.75rem 1.5rem",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          borderRadius: "8px",
-          textDecoration: "none",
-        }}
-      >
-        ▶ プロフィールを編集する
-      </Link>
+    <div>
+      <h1>プロフィールマッチングアプリ</h1>
+      <Link to="/sign-in">ログイン</Link>
+      <Link to="/sign-up">新規登録</Link>
     </div>
   );
 }
