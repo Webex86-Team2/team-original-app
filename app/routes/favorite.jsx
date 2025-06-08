@@ -14,7 +14,7 @@ export default function Favorite() {
         <UserCard />
         <UserCard />
         <UserCard />
-        <UserCard /
+        <UserCard />
       </div>
     </div>
   );

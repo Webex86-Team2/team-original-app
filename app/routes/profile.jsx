@@ -19,6 +19,10 @@ export default function Profile() {
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState({
+    name: "",
+    hometown: "",
+    mbti: "",
+    university: "",
     photoUrl: "",
     Course: "",
     Role: "",
