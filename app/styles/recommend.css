@@ -1,0 +1,8 @@
+.badge-top-pick{
+    display: flex
+}
+
+.badge-top-pick img{
+    height: 400px;
+    width: 300px;
+}
