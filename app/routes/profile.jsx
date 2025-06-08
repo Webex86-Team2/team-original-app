@@ -90,7 +90,7 @@ export default function Profile() {
         {profileFields.map((field) => (
           <div className="profile-field" key={field.key}>
             <label>{field.label}</label>
-            <input name={field.key} value={profile[field.key]} />
+            <input name={field.key} />
           </div>
         ))}
 
