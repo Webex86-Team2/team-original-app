@@ -1,6 +1,5 @@
 import UserCard from "../components/UserCard";
 import "../styles/favorite.css";
-import Navbar from "../components/Navbar";
 
 export default function Favorite() {
   return (
@@ -8,7 +7,6 @@ export default function Favorite() {
       <h1>いいねがありました！</h1>
       <div className="cards-container">
         <UserCard />
-
         <UserCard />
         <UserCard />
         <UserCard />
