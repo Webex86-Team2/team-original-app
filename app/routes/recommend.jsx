@@ -1,11 +1,32 @@
 import asai from "../image/asai.png"
-import asai3 from "../image/asai3.png"
+import asai2 from "../image/asai2.jpg"
+import kossy from "../image/kossy.png"
 import "../styles/recommend.css"
+import OtherPick from "../components/other-pick.jsx"
+import { useState } from "react"
 const profileItems = [
-    "マッチ度:","出身","mbti:","大学","コース","役職","趣味","アピール"
+    "名前","出身","MBTI","大学","コース","役職","趣味","アピール"
+]
+const allProfileItems = [
+    { 
+        picture: asai,
+        profile: profileItems
+    },
+    { 
+        picture: asai2,
+        profile: profileItems
+    },
+    { 
+        picture: kossy,
+        profile: profileItems
+    },
 ]
 
 export default function Recommend () {
+    const [liked, setLiked] = useState(false);
+    const [favorited, setFavorited] = useState(false);
+    const [chatOpen, setChatOpen] = useState(false);
+    
     return(
         <div>
         <h1>あなたにおすすめ</h1>
@@ -16,17 +37,22 @@ export default function Recommend () {
                     <p key={index}>{item}</p>
                 ))}
             </div>
+            <div className="actions">
+                <button onClick={() => setLiked(!liked)}>
+                    {liked ? "♥" : "♡"} いいね
+                </button>
+                <button onClick={() => setFavorited(!favorited)}>
+                    {favorited ? "★" : "☆"} お気に入り
+                </button>
+                <button onClick={() => setChatOpen(!chatOpen)}>💬 チャット</button>
+            </div>  
         </div>
         <h2>その他おすすめ</h2>
-        <div className="badge-other-pick">
-            <img src={asai3} alt="asai3"></img>
-            <div>
-                {profileItems.map((item, index) => (
-                    <p key={index}>{item}</p>
+        <div className="all-badge-other-pick">
+                {allProfileItems.map((item, index) => (
+                <OtherPick items={item} key={index} />
                 ))}
-            </div>
         </div>
         </div>
-
     )
 }
