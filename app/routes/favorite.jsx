@@ -26,5 +26,6 @@ export default function Favorite() {
           <UserCard key={user.id} user={user} />
         ))}
       </div>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "@remix-run/react";
-import { auth, db } from "../../firebase";
+import { auth, db } from "../firebase";
 import {
   collection,
   addDoc,
@@ -9,8 +9,8 @@ import {
   onSnapshot,
   serverTimestamp,
 } from "firebase/firestore";
-import Navbar from "~/components/Navbar";
-import "~/styles/chat.css";
+import Navbar from "../components/Navbar";
+import "../styles/chat.css";
 
 export default function ChatRoom() {
   const { partnerId } = useParams(); // URLの /chat/:partnerId から取得
