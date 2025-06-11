@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/auth/sign-up.css";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../firebase";
 import { Link, useNavigate } from "@remix-run/react"; // ← navigate を追加
 
@@ -16,7 +16,8 @@ export default function SignUp() {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert("新規登録しました");
-      navigate("/"); //トップページへ遷移
+      //await signInWithEmailAndPassword(auth,email,password)
+      navigate("/profile"); //トップページへ遷移
     } catch (error) {
       alert("新規登録に失敗しました: " + error.message);
       console.error(error);

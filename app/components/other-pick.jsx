@@ -8,9 +8,15 @@ const OtherPick = ({items}) => {
         <div className="badge-other-pick">
             <img src={items.picture} alt=""></img>
             <div>
-                {items.profile.map((item, index)=>(
-                    <p key={index}>{item}</p>
-                ))}
+                <h3>マッチ度</h3>
+                <h3>名前</h3>
+                <h3>出身</h3>
+                <h3>MBTI</h3>
+                <h3>大学</h3>
+                <h3>コース</h3>
+                <h3>役職</h3>
+                <h3>趣味</h3>
+                <h3>アピール</h3>
             </div> 
             <div className="actions">
                 <button onClick={() => setLiked(!liked)}>
