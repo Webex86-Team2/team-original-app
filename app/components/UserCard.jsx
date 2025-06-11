@@ -5,7 +5,7 @@ import Tag from "./tag/Tag";
 import { color } from "../utils/color";
 import { Link } from "@remix-run/react";
 
-export default function UserCard() {
+export default function UserCard({ user }) {
   return (
     <Container
       sx={{
@@ -31,10 +31,10 @@ export default function UserCard() {
           }}
         >
           <Link
-            to="/sign-in"
+            to={`/${user.id}`}
             style={{ textDecoration: "none", color: "black" }}
           >
-            <Typography variant="h6">あさい</Typography>
+            <Typography variant="h6">{user.name}</Typography>
           </Link>
           <Typography
             variant="caption"
@@ -42,7 +42,7 @@ export default function UserCard() {
             sx={{ display: "flex", alignItems: "center", gap: 0.5 }}
           >
             <LocationOnOutlinedIcon />
-            東京都
+            {user.hometown}
           </Typography>
         </Box>
       </Box>

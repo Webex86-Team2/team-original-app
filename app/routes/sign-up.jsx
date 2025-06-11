@@ -16,7 +16,6 @@ export default function SignUp() {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert("新規登録しました");
-      //await signInWithEmailAndPassword(auth,email,password)
       navigate("/profile"); //トップページへ遷移
     } catch (error) {
       alert("新規登録に失敗しました: " + error.message);
