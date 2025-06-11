@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "@remix-run/react";
 import "../styles/profile.css";
 import Navbar from "../components/Navbar";
 import { auth, db } from "../firebase";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -19,44 +20,54 @@ export default function Profile() {
     hobbies: "",
   });
 
-  // フォームの入力値を更新
+  // 🔁 初回読み込み時にFirestoreからプロフィール取得
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setProfile((prev) => ({ ...prev, ...docSnap.data() }));
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProfile({ ...profile, [name]: value });
+    setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
-    if (!file) return; // ファイルが選択されていない場合は処理を終了
+    if (!file) return;
 
-    const reader = new FileReader(); // ファイルを読み込むためのオブジェクトを作成
+    const reader = new FileReader();
     reader.onloadend = () => {
-      setProfile({ ...profile, photoUrl: reader.result.toString() });
-      setProfile({
-        ...profile,
+      setProfile((prev) => ({
+        ...prev,
         photoUrl: reader.result.toString(),
-      });
+      }));
     };
     reader.readAsDataURL(file);
   };
 
-  // プロフィールを保存する関数
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const uid = auth.currentUser.uid; // ユーザーのidを取得
-
-    if (!uid) {
-      console.error("ユーザーがログインしていません");
+    const user = auth.currentUser;
+    if (!user) {
+      alert("ログインしていません");
       return;
     }
 
-    await setDoc(doc(db, "users", uid), {
+    await setDoc(doc(db, "users", user.uid), {
       ...profile,
       createdAt: serverTimestamp(),
     });
 
-    console.log("プロフィールを保存しました！", profile);
+    alert("プロフィールを保存しました！");
     navigate("/myprofile");
   };
 
@@ -67,8 +78,13 @@ export default function Profile() {
         <h1>プロフィール編集</h1>
 
         <div className="profile-field">
-          <label htmlFor="name">プロフィール画像を選ぶ</label>
-          <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+          <label htmlFor="photoUpload">プロフィール画像を選ぶ</label>
+          <input
+            id="photoUpload"
+            type="file"
+            accept="image/*"
+            onChange={handlePhotoUpload}
+          />
         </div>
 
         {profile.photoUrl && (
@@ -81,12 +97,18 @@ export default function Profile() {
 
         <div className="profile-field">
           <label htmlFor="name">名前</label>
-          <input name="name" value={profile.name} onChange={handleChange} />
+          <input
+            id="name"
+            name="name"
+            value={profile.name}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="profile-field">
           <label htmlFor="hometown">出身地</label>
           <input
+            id="hometown"
             name="hometown"
             value={profile.hometown}
             onChange={handleChange}
@@ -95,12 +117,18 @@ export default function Profile() {
 
         <div className="profile-field">
           <label htmlFor="mbti">MBTI</label>
-          <input name="mbti" value={profile.mbti} onChange={handleChange} />
+          <input
+            id="mbti"
+            name="mbti"
+            value={profile.mbti}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="profile-field">
           <label htmlFor="university">大学</label>
           <input
+            id="university"
             name="university"
             value={profile.university}
             onChange={handleChange}
@@ -110,6 +138,7 @@ export default function Profile() {
         <div className="profile-field">
           <label htmlFor="courses">コース</label>
           <input
+            id="courses"
             name="courses"
             value={profile.courses}
             onChange={handleChange}
@@ -118,12 +147,18 @@ export default function Profile() {
 
         <div className="profile-field">
           <label htmlFor="roles">役職</label>
-          <input name="roles" value={profile.roles} onChange={handleChange} />
+          <input
+            id="roles"
+            name="roles"
+            value={profile.roles}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="profile-field">
           <label htmlFor="hobbies">趣味</label>
           <input
+            id="hobbies"
             name="hobbies"
             value={profile.hobbies}
             onChange={handleChange}
