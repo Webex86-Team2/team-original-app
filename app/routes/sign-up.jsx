@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "../styles/auth/sign-up.css";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../firebase";
 import { Link, useNavigate } from "@remix-run/react"; // ← navigate を追加
 

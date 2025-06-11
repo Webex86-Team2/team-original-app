@@ -35,6 +35,7 @@ export default function Recommend() {
   const [liked, setLiked] = useState(false);
   const [favorited, setFavorited] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
+  const [users, setUsers] = useState([])
 
   return (
     <div>
