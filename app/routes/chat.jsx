@@ -1,74 +1,82 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "@remix-run/react";
 import "../styles/chat.css";
 import Navbar from "../components/Navbar";
+import { auth, db } from "../firebase";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 
 export default function Chat() {
-  const [myIcon, setMyIcon] = useState("/icons/me.png"); // デフォルトアイコン
+  const [matchedUsers, setMatchedUsers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const savedPhoto = localStorage.getItem("photoUrl");
-    if (savedPhoto) {
-      setMyIcon(savedPhoto);
-    }
+    const fetchMatchedUsers = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const uid = user.uid;
+
+      // 自分が送ったいいね
+      const sentLikesSnap = await getDocs(
+        query(collection(db, "likes"), where("fromUserId", "==", uid))
+      );
+      const sentTo = sentLikesSnap.docs.map((doc) => doc.data().toUserId);
+
+      // 自分が受け取ったいいね
+      const receivedLikesSnap = await getDocs(
+        query(collection(db, "likes"), where("toUserId", "==", uid))
+      );
+      const receivedFrom = receivedLikesSnap.docs.map(
+        (doc) => doc.data().fromUserId
+      );
+
+      // 相互いいねのユーザー（マッチしたユーザー）
+      const matchedIds = sentTo.filter((id) => receivedFrom.includes(id));
+
+      // マッチしたユーザーのプロフィール取得
+      const matchedProfiles = [];
+      for (const id of matchedIds) {
+        const userRef = doc(db, "users", id);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          matchedProfiles.push({ id, ...userSnap.data() });
+        }
+      }
+
+      setMatchedUsers(matchedProfiles);
+    };
+
+    fetchMatchedUsers();
   }, []);
-
-  const [messages, setMessages] = useState([
-    { sender: "Aさん", text: "こんにちは！", iconUrl: "/icons/user-a.png" },
-    {
-      sender: "自分",
-      text: "はじめまして☺️",
-      iconUrl:
-        localStorage.getItem("photoUrl") ||
-        "https://cdn-icons-png.flaticon.com/512/3940/3940403.png",
-    },
-  ]);
-
-  const [input, setInput] = useState("");
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    const messageWithEmoji = input.trim().endsWith("☺️")
-      ? input.trim()
-      : input.trim() + "☺️";
-
-    setMessages((prev) => [
-      ...prev,
-      { sender: "自分", text: messageWithEmoji, iconUrl: myIcon },
-    ]);
-    setInput("");
-  };
 
   return (
     <div>
       <Navbar />
       <div className="chat-container">
-        <h1 className="chat-title">💬 トークルーム</h1>
-        <div className="chat-box">
-          {messages.map((msg, index) => (
+        <h1 className="chat-title">💬 マッチした相手</h1>
+        <div className="chat-user-list">
+          {matchedUsers.length === 0 && <p>まだマッチした相手がいません。</p>}
+          {matchedUsers.map((user) => (
             <div
-              key={index}
-              className={`chat-message ${
-                msg.sender === "自分" ? "right" : "left"
-              }`}
+              key={user.id}
+              className="chat-user"
+              onClick={() => navigate(`/chat/${user.id}`)}
             >
               <img
-                className="chat-icon"
-                src={msg.sender === "自分" ? myIcon : msg.iconUrl}
+                src={user.photoUrl}
                 alt="ユーザーアイコン"
+                className="chat-user-icon"
               />
-              <div className="chat-bubble">{msg.text}</div>
+              <span className="chat-user-name">{user.name}</span>
             </div>
           ))}
-        </div>
-
-        <div className="chat-input">
-          <input
-            type="text"
-            value={input}
-            placeholder="メッセージを入力..."
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <button onClick={handleSend}>送信</button>
         </div>
       </div>
     </div>
