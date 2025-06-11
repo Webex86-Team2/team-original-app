@@ -2,37 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "@remix-run/react";
 import "../styles/profile.css";
 import Navbar from "../components/Navbar";
-
-const profileFields = [
-  {
-    key: "name",
-    label: "名前",
-  },
-  {
-    key: "hometown",
-    label: "出身地",
-  },
-  {
-    key: "mbti",
-    label: "MBTI",
-  },
-  {
-    key: "university",
-    label: "大学",
-  },
-  {
-    key: "course",
-    label: "コース",
-  },
-  {
-    key: "role",
-    label: "役職",
-  },
-  {
-    key: "hobbies",
-    label: "趣味",
-  },
-];
+import { auth, db } from "../firebase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -43,10 +14,16 @@ export default function Profile() {
     mbti: "",
     university: "",
     photoUrl: "",
-    Course: "",
-    Role: "",
+    courses: "",
+    roles: "",
     hobbies: "",
   });
+
+  // フォームの入力値を更新
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProfile({ ...profile, [name]: value });
+  };
 
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0];
@@ -63,8 +40,23 @@ export default function Profile() {
     reader.readAsDataURL(file);
   };
 
-  const handleSave = () => {
-    alert("プロフィールを保存しました！");
+  // プロフィールを保存する関数
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const uid = auth.currentUser.uid; // ユーザーのidを取得
+
+    if (!uid) {
+      console.error("ユーザーがログインしていません");
+      return;
+    }
+
+    await setDoc(doc(db, "users", uid), {
+      ...profile,
+      createdAt: serverTimestamp(),
+    });
+
+    console.log("プロフィールを保存しました！", profile);
     navigate("/myprofile");
   };
 
@@ -87,14 +79,58 @@ export default function Profile() {
           />
         )}
 
-        {profileFields.map((field) => (
-          <div className="profile-field" key={field.key}>
-            <label>{field.label}</label>
-            <input name={field.key} />
-          </div>
-        ))}
+        <div className="profile-field">
+          <label htmlFor="name">名前</label>
+          <input name="name" value={profile.name} onChange={handleChange} />
+        </div>
 
-        <button className="save-button" onClick={handleSave}>
+        <div className="profile-field">
+          <label htmlFor="hometown">出身地</label>
+          <input
+            name="hometown"
+            value={profile.hometown}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="profile-field">
+          <label htmlFor="mbti">MBTI</label>
+          <input name="mbti" value={profile.mbti} onChange={handleChange} />
+        </div>
+
+        <div className="profile-field">
+          <label htmlFor="university">大学</label>
+          <input
+            name="university"
+            value={profile.university}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="profile-field">
+          <label htmlFor="courses">コース</label>
+          <input
+            name="courses"
+            value={profile.courses}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="profile-field">
+          <label htmlFor="roles">役職</label>
+          <input name="roles" value={profile.roles} onChange={handleChange} />
+        </div>
+
+        <div className="profile-field">
+          <label htmlFor="hobbies">趣味</label>
+          <input
+            name="hobbies"
+            value={profile.hobbies}
+            onChange={handleChange}
+          />
+        </div>
+
+        <button className="save-button" onClick={handleSubmit}>
           保存して表示ページへ
         </button>
       </div>

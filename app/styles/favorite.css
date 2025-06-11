@@ -2,20 +2,34 @@
   max-width: 1080px;
   margin: 0 auto;
   padding: 20px 100px;
+  padding-top: 30px; /* ナビバーが上にある場合のスペース確保 */
+  padding-left: 20px;
 }
 
 .favorite h1 {
   text-align: center;
   color: #ff7f9f;
   font-family: "Hiragino Maru Gothic ProN", sans-serif;
-  font-size: 28px;
+  font-size: 40px;
   margin-bottom: 30px;
 }
 
 .cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.user-card {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .favorite-page {
