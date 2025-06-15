@@ -32,9 +32,10 @@ h2 {
 
 /* 下部のバッジ全体をグリッドで並べる */
 .all-badge-other-pick {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
   gap: 24px;
+  overflow-x: auto;   
+  white-space: nowrap;
 }
 
 /* 各下部のバッジ */

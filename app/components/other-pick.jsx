@@ -1,32 +1,18 @@
-import { useState } from "react";
 
-const OtherPick = ({items}) => {
-    const [liked, setLiked] = useState(false);
-    const [favorited, setFavorited] = useState(false);
-    const [chatOpen, setChatOpen] = useState(false);
+const OtherPick = ({user}) => {
     return(
-        <div className="badge-other-pick">
-            <img src={items.picture} alt=""></img>
-            <div>
-                <h3>マッチ度</h3>
-                <h3>名前</h3>
-                <h3>出身</h3>
-                <h3>MBTI</h3>
-                <h3>大学</h3>
-                <h3>コース</h3>
-                <h3>役職</h3>
-                <h3>趣味</h3>
-                <h3>アピール</h3>
-            </div> 
-            <div className="actions">
-                <button onClick={() => setLiked(!liked)}>
-                    {liked ? "♥" : "♡"} いいね
-                </button>
-                <button onClick={() => setFavorited(!favorited)}>
-                    {favorited ? "★" : "☆"} お気に入り
-                </button>
-                <button onClick={() => setChatOpen(!chatOpen)}>💬 チャット</button>
-            </div>  
+        <div className="badge-top-pick">
+          <img src={user.avatarUrl || "/default.png"} alt={user.name} />
+          <div>
+            <h3>マッチ度: {user.matchRate || "??"}%</h3>
+            <h3>名前: {user.name}</h3>
+            <h3>出身: {user.hometown}</h3>
+            <h3>MBTI: {user.mbti}</h3>
+            <h3>大学: {user.university}</h3>
+            <h3>コース: {user.courses}</h3>
+            <h3>趣味: {user.hobbies}</h3>
+            <h3>アピール: {user.comment}</h3>
+          </div>
         </div>
     )
 }
