@@ -1,8 +1,6 @@
 import { Avatar, Box, Container, Stack, Typography } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import asai from "../image/asai.png";
 import Tag from "./tag/Tag";
-import { color } from "../utils/color";
 import { Link } from "@remix-run/react";
 
 export default function UserCard({ user }) {
@@ -21,7 +19,7 @@ export default function UserCard({ user }) {
       }}
     >
       <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2 }}>
-        <Avatar src={asai} sx={{ width: 80, height: 80 }} />
+        <Avatar src={user.avatarUrl} sx={{ width: 80, height: 80 }} />
         <Box
           sx={{
             display: "flex",
@@ -47,13 +45,15 @@ export default function UserCard({ user }) {
         </Box>
       </Box>
       <Stack direction="row" spacing={1} mb={2}>
-        <Tag tag="バスケ" color={color.red} />
-        <Tag tag="アニメ" color={color.blue} />
-        <Tag tag="漫画" color={color.green} />
+        {user.hobbies.slice(0, 3).map((hobby, index) => (
+          <Tag tag={hobby} key={index} />
+        ))}
+
+        {user.hobbies.length > 3 && (
+          <Tag tag={`+${user.hobbies.length - 3}件`} key="more" />
+        )}
       </Stack>
-      <Typography variant="caption">
-        コメント。よろしくお願いします！
-      </Typography>
+      <Typography variant="caption">{user.comment}</Typography>
     </Container>
   );
 }
