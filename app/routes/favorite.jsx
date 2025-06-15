@@ -3,6 +3,7 @@ import UserCard from "../components/UserCard";
 import "../styles/favorite.css";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import Navbar from "../components/Navbar";
 
 export default function Favorite() {
   const [users, setUsers] = useState([]);
@@ -30,12 +31,15 @@ export default function Favorite() {
   }, []);
 
   return (
-    <div className="favorite">
-      <h1>いいねがありました！</h1>
-      <div className="cards-container">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} />
-        ))}
+    <div>
+      <Navbar />
+      <div className="favorite">
+        <h1>いいねがありました！</h1>
+        <div className="cards-container">
+          {users.map((user) => (
+            <UserCard key={user.id} user={user} />
+          ))}
+        </div>
       </div>
     </div>
   );

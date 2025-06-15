@@ -1,10 +1,13 @@
-import { Link } from "@remix-run/react";
-import "./Navbar.css"; // スタイルも分離するならここ
+import { Link, useNavigate } from "@remix-run/react";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import "./Navbar.css";
+import UserMenu from "./UserMenu";
 
 export default function Navbar() {
   return (
     <nav className="navbar">
-      <ul>
+      <ul className="navbar-links">
         <li>
           <Link to="/myprofile">プロフィール</Link>
         </li>
@@ -21,6 +24,10 @@ export default function Navbar() {
           <Link to="/">ホーム</Link>
         </li>
       </ul>
+
+      <div className="navbar-user">
+        <UserMenu />
+      </div>
     </nav>
   );
 }

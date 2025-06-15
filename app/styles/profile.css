@@ -1,134 +1,176 @@
-.profile-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #fff8e7; /* やさしいオレンジ背景 */
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  font-family: "Helvetica Neue", sans-serif;
-  color: #3a3a3a;
-}
+import { useState, useEffect } from "react";
+import { useNavigate } from "@remix-run/react";
+import "../styles/profile.css";
+import Navbar from "../components/Navbar";
+import { auth, db } from "../firebase";
+import { doc, serverTimestamp, setDoc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
-.profile-container h1 {
-  text-align: center;
-  font-size: 1.8rem;
-  margin-bottom: 2rem;
-  color: #e67e22;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.08);
-}
+export default function Profile() {
+  const navigate = useNavigate();
 
-.profile-field {
-  margin-bottom: 1.2rem;
-}
+  const [profile, setProfile] = useState({
+    name: "",
+    hometown: "",
+    mbti: "",
+    university: "",
+    photoUrl: "",
+    courses: "",
+    roles: "",
+    hobbies: "",
+  });
 
-.profile-field label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 0.4rem;
-  color: #6b8e23; /* 黄緑（オリーブ） */
-}
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setProfile((prev) => ({ ...prev, ...docSnap.data() }));
+        }
+      }
+    });
 
-.profile-field input {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 1rem;
-  background-color: #faf9f6;
-  border: 1.5px solid #ddd;
-  border-radius: 10px;
-  outline-color: #ffd54f; /* ソフトイエロー */
-}
+    return () => unsubscribe();
+  }, []);
 
-.save-button {
-  width: 100%;
-  background-color: #4caf50; /* グリーン */
-  color: white;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProfile((prev) => ({ ...prev, [name]: value }));
+  };
 
-.save-button:hover {
-  background-color: #3e8e41;
-}
+  const handlePhotoUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-.profile-photo {
-  display: block;
-  margin: 1.5rem auto;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%; /*丸くしている*/
-  object-fit: cover; /* 画像の比率を保ったまま枠にぴったり収める */
-  border: 3px solid #ffcc80; /* 可愛い縁取り（柿色） */
-  background-color: #fff;
-}
-.profile-container {
-  font-family: "M PLUS Rounded 1c", system-ui, sans-serif;
-}
-.profile-display p {
-  font-size: 1.1rem;
-  margin-bottom: 0.6rem;
-  background-color: #fffdf7;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border-left: 5px solid #ffcc80;
-}
-.home-container {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: #fff8e7;
-  background-image: url("https://www.transparenttextures.com/patterns/leaf.png");
-  background-repeat: repeat;
-  border-radius: 16px;
-  text-align: center;
-  font-family: "M PLUS Rounded 1c", system-ui, sans-serif;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setProfile((prev) => ({
+        ...prev,
+        photoUrl: reader.result.toString(),
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
 
-.home-container h1 {
-  font-size: 2rem;
-  color: #e67e22;
-  margin-bottom: 1rem;
-}
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const user = auth.currentUser;
+    if (!user) {
+      alert("ログインしていません");
+      return;
+    }
 
-.home-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 2rem;
-}
+    await setDoc(doc(db, "users", user.uid), {
+      ...profile,
+      createdAt: serverTimestamp(),
+    });
 
-.home-button {
-  display: block;
-  padding: 1rem;
-  background-color: #ffcc80;
-  color: #3a3a3a;
-  border-radius: 10px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: background-color 0.3s;
-}
+    alert("プロフィールを保存しました！");
+    navigate("/myprofile");
+  };
 
-.home-button:hover {
-  background-color: #ffa726;
-}
-.edit-button {
-  margin-top: 1.5rem;
-  padding: 0.5rem 1rem;
-  background-color: #ffbd59;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-}
+  return (
+    <div>
+      <Navbar />
+      <div className="main-content">
+        <div className="edit-profile-wrapper">
+          <h1 className="profile-title">プロフィール編集</h1>
 
-.edit-button:hover {
-  background-color: #f4a236;
+          <div className="profile-photo-block">
+            <label htmlFor="photoUpload">プロフィール画像を選ぶ</label>
+            <input
+              id="photoUpload"
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+            />
+            {profile.photoUrl && (
+              <img
+                src={profile.photoUrl}
+                alt="プロフィール画像"
+                className="profile-photo"
+              />
+            )}
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <div className="profile-field">
+              <label htmlFor="name">名前</label>
+              <input
+                id="name"
+                name="name"
+                value={profile.name}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="hometown">出身地</label>
+              <input
+                id="hometown"
+                name="hometown"
+                value={profile.hometown}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="mbti">MBTI</label>
+              <input
+                id="mbti"
+                name="mbti"
+                value={profile.mbti}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="university">大学</label>
+              <input
+                id="university"
+                name="university"
+                value={profile.university}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="courses">コース</label>
+              <input
+                id="courses"
+                name="courses"
+                value={profile.courses}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="roles">役職</label>
+              <input
+                id="roles"
+                name="roles"
+                value={profile.roles}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="hobbies">趣味</label>
+              <input
+                id="hobbies"
+                name="hobbies"
+                value={profile.hobbies}
+                onChange={handleChange}
+              />
+            </div>
+
+            <button type="submit" className="save-button">
+              保存して表示ページへ
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }

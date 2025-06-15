@@ -59,24 +59,27 @@ export default function Chat() {
   return (
     <div>
       <Navbar />
-      <div className="chat-container">
-        <h1 className="chat-title">💬 マッチした相手</h1>
-        <div className="chat-user-list">
-          {matchedUsers.length === 0 && <p>まだマッチした相手がいません。</p>}
-          {matchedUsers.map((user) => (
-            <div
-              key={user.id}
-              className="chat-user"
-              onClick={() => navigate(`/chat/${user.id}`)}
-            >
-              <img
-                src={user.photoUrl}
-                alt="ユーザーアイコン"
-                className="chat-user-icon"
-              />
-              <span className="chat-user-name">{user.name}</span>
-            </div>
-          ))}
+      <div className="main-content">
+        <div className="chat-container">
+          <h1 className="chat-title">💬 マッチした相手</h1>
+          <div className="chat-user-list">
+            {matchedUsers.length === 0 && <p>まだマッチした相手がいません。</p>}
+            {matchedUsers.map((user) => (
+              <button
+                key={user.id}
+                className="chat-user"
+                onClick={() => navigate(`/chat/${user.id}`)}
+                tabIndex={0}
+              >
+                <img
+                  src={user.photoUrl}
+                  alt="ユーザーアイコン"
+                  className="chat-user-icon"
+                />
+                <span className="chat-user-name">{user.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

@@ -20,7 +20,6 @@ export default function Profile() {
     hobbies: "",
   });
 
-  // 🔁 初回読み込み時にFirestoreからプロフィール取得
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -74,100 +73,103 @@ export default function Profile() {
   return (
     <div>
       <Navbar />
-      <div className="profile-container">
-        <h1>プロフィール編集</h1>
+      <div className="main-content">
+        <div className="edit-profile-wrapper">
+          <h1 className="profile-title">プロフィール編集</h1>
 
-        <div className="profile-field">
-          <label htmlFor="photoUpload">プロフィール画像を選ぶ</label>
-          <input
-            id="photoUpload"
-            type="file"
-            accept="image/*"
-            onChange={handlePhotoUpload}
-          />
+          <div className="profile-photo-block">
+            <label htmlFor="photoUpload">プロフィール画像を選ぶ</label>
+            <input
+              id="photoUpload"
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoUpload}
+            />
+            {profile.photoUrl && (
+              <img
+                src={profile.photoUrl}
+                alt="プロフィール画像"
+                className="profile-photo"
+              />
+            )}
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            <div className="profile-field">
+              <label htmlFor="name">名前</label>
+              <input
+                id="name"
+                name="name"
+                value={profile.name}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="hometown">出身地</label>
+              <input
+                id="hometown"
+                name="hometown"
+                value={profile.hometown}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="mbti">MBTI</label>
+              <input
+                id="mbti"
+                name="mbti"
+                value={profile.mbti}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="university">大学</label>
+              <input
+                id="university"
+                name="university"
+                value={profile.university}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="courses">コース</label>
+              <input
+                id="courses"
+                name="courses"
+                value={profile.courses}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="roles">役職</label>
+              <input
+                id="roles"
+                name="roles"
+                value={profile.roles}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="profile-field">
+              <label htmlFor="hobbies">趣味</label>
+              <input
+                id="hobbies"
+                name="hobbies"
+                value={profile.hobbies}
+                onChange={handleChange}
+              />
+            </div>
+
+            <button type="submit" className="save-button">
+              保存して表示ページへ
+            </button>
+          </form>
         </div>
-
-        {profile.photoUrl && (
-          <img
-            src={profile.photoUrl}
-            alt="プロフィール画像"
-            className="profile-photo"
-          />
-        )}
-
-        <div className="profile-field">
-          <label htmlFor="name">名前</label>
-          <input
-            id="name"
-            name="name"
-            value={profile.name}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="hometown">出身地</label>
-          <input
-            id="hometown"
-            name="hometown"
-            value={profile.hometown}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="mbti">MBTI</label>
-          <input
-            id="mbti"
-            name="mbti"
-            value={profile.mbti}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="university">大学</label>
-          <input
-            id="university"
-            name="university"
-            value={profile.university}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="courses">コース</label>
-          <input
-            id="courses"
-            name="courses"
-            value={profile.courses}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="roles">役職</label>
-          <input
-            id="roles"
-            name="roles"
-            value={profile.roles}
-            onChange={handleChange}
-          />
-        </div>
-
-        <div className="profile-field">
-          <label htmlFor="hobbies">趣味</label>
-          <input
-            id="hobbies"
-            name="hobbies"
-            value={profile.hobbies}
-            onChange={handleChange}
-          />
-        </div>
-
-        <button className="save-button" onClick={handleSubmit}>
-          保存して表示ページへ
-        </button>
       </div>
     </div>
   );

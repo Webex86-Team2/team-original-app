@@ -21,3 +21,20 @@
 .navbar a:hover {
   color: #ff7f50;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #fdf5e6;
+  border-bottom: 1px solid #ccc;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

@@ -29,3 +29,24 @@
 .home-button:hover {
   background-color: #f9844a;
 }
+
+.logout-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #cc0000;
+}
+
+.main-content {
+  margin-left: 200px; /* サイドバーの幅と合わせる */
+  padding: 1rem;
+}
