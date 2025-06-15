@@ -11,32 +11,25 @@ import { Link, useNavigate } from "@remix-run/react";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  // メール&パスワードログイン処理
+  const navigate = useNavigate();
+  // ログインボタンをクリックしたときの処理
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      alert("ログインしました");
-      navigate("/");
-    } catch (error) {
-      alert("ログインに失敗しました: " + error.message);
-      console.error(error);
-    }
+    e.preventDefault(); // デフォルトの動作を防止
+    // ログイン処理
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("ログインしました");
+    navigate("/favorite");
   };
 
   // Googleログイン処理
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      alert("Googleログインに成功しました");
-      navigate("/");
-    } catch (error) {
-      alert("Googleログインに失敗しました: " + error.message);
-      console.error(error);
-    }
+
+    // 認証処理
+    await signInWithPopup(auth, provider);
+    alert("Googleログインに成功しました");
+    navigate("/favorite");
   };
 
   return (
@@ -56,7 +49,6 @@ export default function SignIn() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-
           {/* パスワード */}
           <div className="form-group">
             <label htmlFor="password">パスワード</label>
@@ -68,16 +60,13 @@ export default function SignIn() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-
           <button type="submit" className="sign-in-button">
             ログイン
           </button>
         </form>
-
         <button onClick={handleGoogleSignIn} className="google-button">
           Googleでログイン
         </button>
-
         <Link to="/sign-up">新規登録はこちら</Link>
       </div>
     </div>

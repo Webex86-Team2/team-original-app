@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate, Link } from "@remix-run/react";
 import { auth } from "../firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import "../styles/home.css";
+import LogoutButton from "../components/LogoutButton";
 
 export const meta = () => {
   return [
@@ -18,13 +19,15 @@ export default function Index() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        navigate("/sign-in"); // 未ログインならサインイン画面へ
-      }
+    // セッションを毎回クリアするためにログアウト
+    signOut(auth).then(() => {
+      // ログアウト後、ログイン状態をチェック
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          navigate("/sign-in"); // 未ログインならサインイン画面へ
+        }
+      });
     });
-
-    return () => unsubscribe(); // クリーンアップ
   }, [navigate]);
 
   return (
@@ -45,6 +48,10 @@ export default function Index() {
         <Link to="/chat" className="home-button">
           💬 チャット
         </Link>
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <LogoutButton /> {/* ログアウトボタン表示 */}
       </div>
     </div>
   );
