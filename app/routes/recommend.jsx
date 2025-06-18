@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import OtherPick from "../components/other-pick.jsx";
 import "../styles/recommend.css";
 import useAuth from "../hooks/useAuth";
+import { addDoc, serverTimestamp } from "firebase/firestore";
 
 // マッチ度計算関数
 function calculateMatchRate(userA, userB) {
@@ -169,7 +170,29 @@ export default function Recommend() {
             </h3>
           </div>
           <div className="chat-button-area">
-            <button className="chat-button">💬 チャットする</button>
+            <button
+              className="chat-button"
+              onClick={async () => {
+                const currentUserId = user.uid;
+                const partnerId = topUser.id;
+                if (!currentUserId || !partnerId) return;
+
+                try {
+                  // チャットパートナーを保存（重複チェックは任意で追加可）
+                  await addDoc(collection(db, "chatPartners"), {
+                    userId: currentUserId,
+                    partnerId,
+                    createdAt: serverTimestamp(),
+                  });
+
+                  alert(`${topUser.name}さんとのチャットを開始しました！`);
+                } catch (error) {
+                  console.error("チャット相手の保存に失敗:", error);
+                }
+              }}
+            >
+              💬 チャットする
+            </button>
           </div>
         </div>
       )}
