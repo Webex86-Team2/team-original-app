@@ -62,7 +62,7 @@
 }
 
 .chat-message.right .chat-bubble {
-  background-color: #ffe082;
+  background-color: #fff5d6;
 }
 
 .chat-input {
@@ -87,4 +87,59 @@
   border: none;
   cursor: pointer;
   font-weight: bold;
+}
+
+.chat-image {
+  max-width: 200px;
+  border-radius: 12px;
+  margin-top: 4px;
+}
+
+.stamp-panel {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #fff7e6;
+  border-top: 1px solid #ccc;
+}
+
+.stamp-option {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.stamp-option:hover {
+  transform: scale(1.1);
+}
+
+.chat-stamp {
+  width: 100px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.chat-timestamp {
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 4px;
+  text-align: right;
+}
+
+.chat-read {
+  font-size: 0.7rem;
+  color: #4caf50;
+  margin-top: 2px;
+  text-align: right;
+}
+
+.chat-status {
+  display: flex;
+  align-items: center;
+  font-size: 0.7rem;
+  color: #888;
+  margin-top: 4px;
+  justify-content: flex-start;
+  gap: 4px;
 }
