@@ -13,7 +13,6 @@ function calculateMatchRate(userA, userB) {
 
   if (userA.mbti && userB.mbti && userA.mbti === userB.mbti) score += 2;
   if (Array.isArray(userA.hobbies) && Array.isArray(userB.hobbies)) {
-
     const commonHobbies = userA.hobbies.filter(hobby => userB.hobbies.includes(hobby));
     score += Math.min(commonHobbies.length, 2);
   }
@@ -25,12 +24,10 @@ function calculateMatchRate(userA, userB) {
   if (userA.hometown && userB.hometown && userA.hometown === userB.hometown) score += 1;
 
   return Math.round(((score / maxScore)+1) * 50);
-
 }
 
 // 星を描画する関数
 function renderStars(rate) {
-
   if (typeof rate !== 'number') return "☆☆☆☆☆";
   const stars = Math.round((rate / 100) * 5);
   return "★".repeat(stars) + "☆".repeat(5 - stars);
@@ -40,7 +37,7 @@ export default function Recommend() {
   const [topUser, setTopUser] = useState(null);
   const [otherUsers, setOtherUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const {user} = useAuth();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!user || !user.uid) {
@@ -100,23 +97,23 @@ export default function Recommend() {
           <div className="match-rate">
             <span>マッチ度: {topUser.matchRate}%</span>
             <span className="match-stars">{renderStars(topUser.matchRate)}</span>
-
           </div>
-          <div className="chat-button-area">
-            <button className="chat-button">💬 チャットする</button>
-          </div>
+          <h3><strong>名前:</strong> {topUser.name}</h3>
+          <h3><strong>出身:</strong> {topUser.hometown}</h3>
+          <h3><strong>MBTI:</strong> {topUser.mbti}</h3>
+          <h3><strong>大学:</strong> {topUser.university}</h3>
+          <h3><strong>コース:</strong> {(topUser.courses ?? []).join("、")}</h3>
+          <h3><strong>趣味:</strong> {(topUser.hobbies ?? []).join("、")}</h3>
+          <h3><strong>アピール:</strong> {topUser.comment}</h3>
         </div>
         <div className="chat-button-area">
           <button className="chat-button">💬 チャットする</button>
       </div>
       </div>
 
-
       <h2>その他おすすめ</h2>
       <div className="all-badge-other-pick">
-        {otherUsers.map((u, i) => (
-          <OtherPick user={u} key={u.id || i} />
-        ))}
+        {otherUsers.map((u, i) => <OtherPick user={u} key={u.id || i} />)}
       </div>
     </div>
   );
