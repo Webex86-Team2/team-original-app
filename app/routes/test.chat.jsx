@@ -127,7 +127,7 @@ export default function TestChat() {
     <div className="simple-chat">
       <div className="chat-box" ref={chatBoxRef}>
         {messages.map((msg) => (
-          <div
+          <button
             key={msg.id}
             className={`chat-message ${
               msg.sender === auth.currentUser?.uid ? "right" : "left"
@@ -180,7 +180,7 @@ export default function TestChat() {
                   </button>
                 )}
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
@@ -202,24 +202,32 @@ export default function TestChat() {
       </div>
 
       <div className="stamp-panel">
-        <img
-          src="/stamps/happy.png"
-          alt="スタンプ"
+        <button
           className="stamp-option"
           onClick={() => handleStampSend("/stamps/happy.png")}
-        />
-        <img
-          src="/stamps/love.png"
-          alt="スタンプ"
+        >
+          <img
+            src="/stamps/happy.png"
+            alt="スタンプ"
+            className="stamp-option"
+          />
+        </button>
+        <button
           className="stamp-option"
           onClick={() => handleStampSend("/stamps/love.png")}
-        />
-        <img
-          src="/stamps/thumbs-up.png"
-          alt="スタンプ"
+        >
+          <img src="/stamps/love.png" alt="スタンプ" className="stamp-option" />
+        </button>
+        <button
           className="stamp-option"
           onClick={() => handleStampSend("/stamps/thumbs-up.png")}
-        />
+        >
+          <img
+            src="/stamps/thumbs-up.png"
+            alt="スタンプ"
+            className="stamp-option"
+          />
+        </button>
       </div>
     </div>
   );
