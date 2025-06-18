@@ -1,47 +1,13 @@
-// mui
 import {
-  Avatar,
   Box,
   Button,
-  Chip,
   Container,
   Divider,
+  Skeleton,
   Typography,
 } from "@mui/material";
-import useAuth from "../hooks/useAuth";
-import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../firebase";
-import CourseChip from "../components/ui/CourseChip";
-import SkeltonProfile from "../components/ui/SkeltonProfile";
 
-export default function TestProfile() {
-  const { user } = useAuth();
-  const [userData, setUserData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const userRef = doc(db, "mockUsers", user.uid);
-      const userDoc = await getDoc(userRef);
-
-      if (userDoc.exists()) {
-        setUserData(userDoc.data());
-      }
-
-      // 3秒後にローディングを終了
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    };
-
-    fetchUser();
-  }, [user]);
-
-  if (isLoading) {
-    return <SkeltonProfile />;
-  }
-
+export default function SkeltonProfile() {
   return (
     <Container>
       <Box
@@ -67,15 +33,10 @@ export default function TestProfile() {
           marginBottom: "32px",
         }}
       >
-        <Avatar
-          src={userData.avatarURL}
-          sx={{ width: "100px", height: "100px" }}
-        />
+        <Skeleton variant="circular" width={100} height={100} />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
-          <Typography variant="h6">{userData.name}</Typography>
-          <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            {userData.email}
-          </Typography>
+          <Skeleton variant="text" width={100} height={24} />
+          <Skeleton variant="text" width={100} height={24} />
         </Box>
       </Container>
 
@@ -111,7 +72,7 @@ export default function TestProfile() {
               HOMETOWN
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              {userData.hometown}
+              <Skeleton variant="text" width={100} height={24} />
             </Typography>
           </Box>
           <Box
@@ -126,7 +87,7 @@ export default function TestProfile() {
               MBTI
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              {userData.mbti}
+              <Skeleton variant="text" width={100} height={24} />
             </Typography>
           </Box>
         </Box>
@@ -152,7 +113,7 @@ export default function TestProfile() {
               UNIVERSITY
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              {userData.university}
+              <Skeleton variant="text" width={100} height={24} />
             </Typography>
           </Box>
           <Box
@@ -167,7 +128,7 @@ export default function TestProfile() {
               BIRTHDAY
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              {userData.birthMonth} / {userData.birthDay}
+              <Skeleton variant="text" width={100} height={24} />
             </Typography>
           </Box>
         </Box>
@@ -186,9 +147,8 @@ export default function TestProfile() {
             COURSES
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            {userData.courses.map((course, index) => (
-              <CourseChip key={index} course={course} />
-            ))}
+            <Skeleton variant="text" width={50} height={24} />
+            <Skeleton variant="text" width={50} height={24} />
           </Box>
         </Box>
 
@@ -206,18 +166,8 @@ export default function TestProfile() {
             HOBBIES
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            {userData.hobbies.map((hobby, index) => (
-              <Chip
-                key={index}
-                label={hobby}
-                variant="outlined"
-                color="primary"
-                sx={{
-                  color: "text.primary",
-                  borderColor: "text.primary",
-                }}
-              />
-            ))}
+            <Skeleton variant="text" width={50} height={24} />
+            <Skeleton variant="text" width={50} height={24} />
           </Box>
         </Box>
 
@@ -234,7 +184,7 @@ export default function TestProfile() {
             COMMENT
           </Typography>
           <Typography variant="h6" sx={{ color: "text.primary" }}>
-            {userData.comment}
+            <Skeleton variant="text" width={100} height={24} />
           </Typography>
         </Box>
       </Container>
