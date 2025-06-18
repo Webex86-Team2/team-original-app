@@ -20,24 +20,22 @@ function calculateMatchRate(userA, userB) {
     const commonCourses = userA.courses.filter(course => userB.courses.includes(course));
     if (commonCourses.length > 0) score += 1;
   }
-  if (userA.university && userB.university && userA.university === userB.university) score += 1;
-  if (userA.hometown && userB.hometown && userA.hometown === userB.hometown) score += 1;
 
   return Math.round(((score / maxScore)+1) * 50);
 }
 
 // 星を描画する関数
 function renderStars(rate) {
-  if (typeof rate !== 'number') return "☆☆☆☆☆";
-  const stars = Math.round((rate / 100) * 5);
-  return "★".repeat(stars) + "☆".repeat(5 - stars);
+  if (typeof rate !== "number") return "☆☆☆☆☆";
+  const stars = Math.round((rate / 100) * 5); // 0〜5の整数に変換
+  return "★".repeat(stars) + "☆".repeat(5 - stars); // ★★★☆☆
 }
 
 export default function Recommend() {
+  const { user } = useAuth();
   const [topUser, setTopUser] = useState(null);
   const [otherUsers, setOtherUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
 
   useEffect(() => {
     if (!user || !user.uid) {
@@ -91,13 +89,68 @@ export default function Recommend() {
     <div>
       <Navbar />
       <h1>あなたにおすすめ</h1>
-      <div className="badge-top-pick">
-        <img src={topUser.avatarUrl || "/default.png"} alt={topUser.name} />
+
+      {topUser && (
         <div>
-          <div className="match-rate">
-            <span>マッチ度: {topUser.matchRate}%</span>
-            <span className="match-stars">{renderStars(topUser.matchRate)}</span>
+          <div className="badge-top-pick">
+            <img src={topUser.avatarUrl || "/default.png"} alt={topUser.name} />
+            <div>
+              <div className="match-rate">
+                <span>マッチ度: {topUser.matchRate}%</span>
+                <span className="match-stars">
+                  {renderStars(topUser.matchRate)}
+                </span>
+              </div>
+              <h3>
+                <strong>名前:</strong> {topUser.name}
+              </h3>
+              <h3>
+                <strong>出身:</strong> {topUser.hometown}
+              </h3>
+              <h3>
+                <strong>MBTI:</strong> {topUser.mbti}
+              </h3>
+              <h3>大学: {topUser.university}</h3>
+              <h3>
+                コース:{" "}
+                {Array.isArray(topUser.courses)
+                  ? topUser.courses.join("、")
+                  : topUser.courses}
+              </h3>
+              <h3>
+                趣味:{" "}
+                {Array.isArray(topUser.hobbies)
+                  ? topUser.hobbies.join("、")
+                  : topUser.hobbies}
+              </h3>
+              <h3>アピール: {topUser.comment}</h3>
+            </div>
+            <h3>
+              <strong>名前:</strong> {topUser.name}
+            </h3>
+            <h3>
+              <strong>出身:</strong> {topUser.hometown}
+            </h3>
+            <h3>
+              <strong>MBTI:</strong> {topUser.mbti}
+            </h3>
+            <h3>
+              <strong>大学:</strong> {topUser.university}
+            </h3>
+            <h3>
+              <strong>コース:</strong> {(topUser.courses ?? []).join("、")}
+            </h3>
+            <h3>
+              <strong>趣味:</strong> {(topUser.hobbies ?? []).join("、")}
+            </h3>
+            <h3>
+              <strong>アピール:</strong> {topUser.comment}
+            </h3>
           </div>
+          <div className="chat-button-area">
+            <button className="chat-button">💬 チャットする</button>
+          </div>
+
           <h3><strong>名前:</strong> {topUser.name}</h3>
           <h3><strong>出身:</strong> {topUser.hometown}</h3>
           <h3><strong>MBTI:</strong> {topUser.mbti}</h3>
@@ -111,9 +164,12 @@ export default function Recommend() {
       </div>
       </div>
 
+
       <h2>その他おすすめ</h2>
       <div className="all-badge-other-pick">
-        {otherUsers.map((u, i) => <OtherPick user={u} key={u.id || i} />)}
+        {otherUsers.map((u, i) => (
+          <OtherPick user={u} key={u.id || i} />
+        ))}
       </div>
     </div>
   );
