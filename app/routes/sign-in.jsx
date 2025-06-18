@@ -19,7 +19,7 @@ export default function SignIn() {
     // ログイン処理
     await signInWithEmailAndPassword(auth, email, password);
     alert("ログインしました");
-    navigate("/favorite");
+    navigate("/test/profile");
   };
 
   // Googleログイン処理
@@ -29,7 +29,7 @@ export default function SignIn() {
     // 認証処理
     await signInWithPopup(auth, provider);
     alert("Googleログインに成功しました");
-    navigate("/favorite");
+    navigate("/test/profile");
   };
 
   return (
