@@ -38,6 +38,8 @@ export default function TestProfile() {
     fetchUser();
   }, [user]);
 
+  console.log("userData", userData);
+
   if (isLoading) {
     return <SkeltonProfile />;
   }
@@ -68,7 +70,7 @@ export default function TestProfile() {
         }}
       >
         <Avatar
-          src={userData.avatarURL}
+          src={userData?.avatarUrl || ""}
           sx={{ width: "100px", height: "100px" }}
         />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
