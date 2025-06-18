@@ -2,8 +2,11 @@ import Header from "../components/layout/Header";
 import Sidebar from "../components/layout/Sidebar";
 import { Paper } from "@mui/material";
 import { Outlet } from "@remix-run/react";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Test() {
+  const { user } = useAuth();
+
   return (
     <div>
       <Header />
@@ -21,7 +24,7 @@ export default function Test() {
               borderRadius: "16px",
             }}
           >
-            <Outlet />
+            <Outlet context={{ user }} />
           </Paper>
         </div>
       </div>
