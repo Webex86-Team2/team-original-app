@@ -40,7 +40,7 @@ export default function TestProfile() {
           sx={{ width: "100px", height: "100px" }}
         />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
-          <Typography variant="h5">渡邊怜奈</Typography>
+          <Typography variant="h6">渡邊怜奈</Typography>
           <Typography variant="body1" sx={{ color: "text.secondary" }}>
             email@example.com
           </Typography>
