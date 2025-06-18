@@ -12,17 +12,11 @@ import { Avatar } from "@mui/material";
 import { auth } from "../../firebase";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
+import useAuth from "../../hooks/useAuth";
 
 export default function MenuAppBar() {
-  const [currentUser, setCurrentUser] = React.useState(null);
+  const { user } = useAuth();
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  React.useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -70,10 +64,7 @@ export default function MenuAppBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <Avatar
-                  src={currentUser?.photoURL}
-                  sx={{ width: 32, height: 32 }}
-                />
+                <Avatar src={user?.photoURL} sx={{ width: 32, height: 32 }} />
               </IconButton>
               <Menu
                 id="basic-menu"
@@ -103,7 +94,7 @@ export default function MenuAppBar() {
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
                   <Link
-                    to="/test/logout"
+                    to="/sign-out"
                     style={{
                       textDecoration: "none",
                       color: "inherit",

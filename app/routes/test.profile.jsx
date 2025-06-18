@@ -8,8 +8,36 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
+import useAuth from "../hooks/useAuth";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../firebase";
+import CourseChip from "../components/ui/CourseChip";
 
 export default function TestProfile() {
+  const { user } = useAuth();
+  const [userData, setUserData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const userRef = doc(db, "mockUsers", user.uid);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        setUserData(userDoc.data());
+      }
+
+      setIsLoading(false);
+    };
+
+    fetchUser();
+  }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Container>
       <Box
@@ -36,13 +64,13 @@ export default function TestProfile() {
         }}
       >
         <Avatar
-          src="https://via.placeholder.com/150"
+          src={userData.avatarURL}
           sx={{ width: "100px", height: "100px" }}
         />
         <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
-          <Typography variant="h6">渡邊怜奈</Typography>
+          <Typography variant="h6">{userData.name}</Typography>
           <Typography variant="body1" sx={{ color: "text.secondary" }}>
-            email@example.com
+            {userData.email}
           </Typography>
         </Box>
       </Container>
@@ -79,7 +107,7 @@ export default function TestProfile() {
               HOMETOWN
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              東京都
+              {userData.hometown}
             </Typography>
           </Box>
           <Box
@@ -94,7 +122,7 @@ export default function TestProfile() {
               MBTI
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              ESFJ（領事官）
+              {userData.mbti}
             </Typography>
           </Box>
         </Box>
@@ -120,7 +148,7 @@ export default function TestProfile() {
               UNIVERSITY
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              早稲田大学
+              {userData.university}
             </Typography>
           </Box>
           <Box
@@ -135,7 +163,7 @@ export default function TestProfile() {
               BIRTHDAY
             </Typography>
             <Typography variant="h6" sx={{ color: "text.primary" }}>
-              5 / 3
+              {userData.birthMonth} / {userData.birthDay}
             </Typography>
           </Box>
         </Box>
@@ -154,18 +182,9 @@ export default function TestProfile() {
             COURSES
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            <Chip
-              label="Web"
-              variant="outlined"
-              color="primary"
-              sx={{
-                color: "#E95B5A",
-                borderColor: "#E95B5A",
-                paddingLeft: 1,
-                paddingRight: 1,
-                fontSize: "16px",
-              }}
-            />
+            {userData.courses.map((course, index) => (
+              <CourseChip key={index} course={course} />
+            ))}
           </Box>
         </Box>
 
@@ -183,42 +202,18 @@ export default function TestProfile() {
             HOBBIES
           </Typography>
           <Box sx={{ display: "flex", gap: 1 }}>
-            <Chip
-              label="旅行"
-              variant="outlined"
-              color="primary"
-              sx={{
-                color: "text.primary",
-                borderColor: "text.primary",
-                paddingLeft: 1,
-                paddingRight: 1,
-                fontSize: "16px",
-              }}
-            />
-            <Chip
-              label="ネトフリ"
-              variant="outlined"
-              color="primary"
-              sx={{
-                color: "text.primary",
-                borderColor: "text.primary",
-                paddingLeft: 1,
-                paddingRight: 1,
-                fontSize: "16px",
-              }}
-            />
-            <Chip
-              label="自然界隈"
-              variant="outlined"
-              color="primary"
-              sx={{
-                color: "text.primary",
-                borderColor: "text.primary",
-                paddingLeft: 1,
-                paddingRight: 1,
-                fontSize: "16px",
-              }}
-            />
+            {userData.hobbies.map((hobby, index) => (
+              <Chip
+                key={index}
+                label={hobby}
+                variant="outlined"
+                color="primary"
+                sx={{
+                  color: "text.primary",
+                  borderColor: "text.primary",
+                }}
+              />
+            ))}
           </Box>
         </Box>
 
@@ -235,7 +230,7 @@ export default function TestProfile() {
             COMMENT
           </Typography>
           <Typography variant="h6" sx={{ color: "text.primary" }}>
-            よろしくお願いします！
+            {userData.comment}
           </Typography>
         </Box>
       </Container>

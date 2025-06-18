@@ -11,25 +11,30 @@ import { Link, useNavigate } from "@remix-run/react";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
+
   // ログインボタンをクリックしたときの処理
   const handleSubmit = async (e) => {
     e.preventDefault(); // デフォルトの動作を防止
-    // ログイン処理
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("ログインしました");
-    navigate("/test/profile");
+    try {
+      // ログイン処理
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/test/profile");
+    } catch (error) {
+      alert("ログインに失敗しました: " + error.message);
+    }
   };
 
   // Googleログイン処理
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
 
-    // 認証処理
-    await signInWithPopup(auth, provider);
-    alert("Googleログインに成功しました");
-    navigate("/test/profile");
+    try {
+      await signInWithPopup(auth, provider);
+      navigate("/test/profile");
+    } catch (error) {
+      alert("Googleログインに失敗しました: " + error.message);
+    }
   };
 
   return (
