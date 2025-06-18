@@ -21,6 +21,9 @@ const OtherPick = ({ user }) => {
         <h3>趣味: {Array.isArray(user.hobbies) ? user.hobbies.join("、") : user.hobbies}</h3>
         <h3>アピール: {user.comment}</h3>
       </div>
+      <div className="chat-button-area">
+        <button className="chat-button">💬 チャットする</button>
+      </div>
     </div>
   );
 };

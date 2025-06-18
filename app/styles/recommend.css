@@ -14,7 +14,7 @@ h2 {
 /* 上部のおすすめバッジ（大） */
 .badge-top-pick {
   display: flex;
-  gap: 20px;
+  gap: 40px;
   align-items: center;
   padding: 20px;
   background-color: white;
@@ -32,9 +32,7 @@ h2 {
 
 /* 下部のバッジ全体をグリッドで並べる */
 .all-badge-other-pick {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;   
+  gap: 24px;   
   white-space: nowrap;
 }
 
@@ -74,12 +72,36 @@ h2 {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 1.2rem;
+  font-size: 1.8rem;    /* もとの1.2remから大きく */
   font-weight: bold;
   margin-bottom: 0.5rem;
+  color: #222;          /* 好きな色に調整してもOK */
 }
 
+
 .match-stars {
-  color: gold;
-  font-size: 1.3rem;
+  font-size: 2rem;      /* 星をさらに大きく */
+  color: #ffb400;       /* 星色をゴールドっぽく */
+}
+
+
+.chat-button-area {
+  margin-top: 1rem;
+  text-align: center; /* 中央寄せにしたい場合 */
+}
+
+.chat-button {
+  font-size: 1.8rem;       /* 文字を大きく */
+  padding: 12px 30px;      /* ボタンの内側の余白を広く */
+  border-radius: 12px;     /* 角丸 */
+  cursor: pointer;
+  background-color: #4cafaf;  /* 好きな色に変更してOK */
+  color: white;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+.chat-button:hover {
+  background-color: #45a049; /* ホバー時の色 */
 }
