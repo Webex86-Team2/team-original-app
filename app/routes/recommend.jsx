@@ -9,21 +9,21 @@ import useAuth from "../hooks/useAuth";
 // マッチ度計算関数
 function calculateMatchRate(userA, userB) {
   let score = 0;
-  const maxScore = 14;
+  const maxScore = 7;
 
-  if (userA.mbti && userB.mbti && userA.mbti === userB.mbti) score += 3;
+  if (userA.mbti && userB.mbti && userA.mbti === userB.mbti) score += 2;
   if (Array.isArray(userA.hobbies) && Array.isArray(userB.hobbies)) {
     const commonHobbies = userA.hobbies.filter(hobby => userB.hobbies.includes(hobby));
-    score += Math.min(commonHobbies.length, 5);
+    score += Math.min(commonHobbies.length, 2);
   }
   if (Array.isArray(userA.courses) && Array.isArray(userB.courses)) {
     const commonCourses = userA.courses.filter(course => userB.courses.includes(course));
-    if (commonCourses.length > 0) score += 3;
+    if (commonCourses.length > 0) score += 1;
   }
   if (userA.university && userB.university && userA.university === userB.university) score += 1;
   if (userA.hometown && userB.hometown && userA.hometown === userB.hometown) score += 1;
 
-  return Math.round((score / maxScore) * 100);
+  return Math.round(((score / maxScore)+1) * 50);
 }
 
 // 星を描画する関数
@@ -108,7 +108,7 @@ export default function Recommend() {
         </div>
         <div className="chat-button-area">
           <button className="chat-button">💬 チャットする</button>
-        </div>
+      </div>
       </div>
 
       <h2>その他おすすめ</h2>
