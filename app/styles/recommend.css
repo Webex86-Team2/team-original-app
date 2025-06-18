@@ -69,3 +69,17 @@ h2 {
 .recommend-page {
   padding-top: 80px; /* メニューの高さに合わせて調整 */
 }
+
+.match-rate {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.match-stars {
+  color: gold;
+  font-size: 1.3rem;
+}
