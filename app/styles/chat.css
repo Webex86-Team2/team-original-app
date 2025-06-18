@@ -31,6 +31,8 @@
   display: flex;
   align-items: flex-start;
   max-width: 80%;
+  border: none;
+  background-color: transparent;
 }
 
 .chat-message.left {
@@ -142,4 +144,9 @@
   margin-top: 4px;
   justify-content: flex-start;
   gap: 4px;
+}
+
+.stamp-option {
+  background-color: transparent;
+  border: none;
 }

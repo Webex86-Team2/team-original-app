@@ -14,11 +14,18 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import CourseChip from "../components/ui/CourseChip";
 import SkeltonProfile from "../components/ui/SkeltonProfile";
+import { useNavigate } from "react-router-dom";
 
 export default function TestProfile() {
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const navigate = useNavigate();
+
+  const handleEdit = () => {
+    navigate("/test/edit");
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,8 +45,6 @@ export default function TestProfile() {
     fetchUser();
   }, [user]);
 
-  console.log("userData", userData);
-
   if (isLoading) {
     return <SkeltonProfile />;
   }
@@ -56,7 +61,7 @@ export default function TestProfile() {
         }}
       >
         <Typography variant="h6">プロフィール</Typography>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleEdit}>
           編集
         </Button>
       </Box>
