@@ -6,6 +6,7 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import AuthProvider from "./contexts/AuthContext";
+import "./styles/global-css.css";
 
 export function Layout({ children }) {
   return (

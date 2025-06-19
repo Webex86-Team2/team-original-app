@@ -1,0 +1,16 @@
+.main {
+  background-image: url("../image/Group 187 (1).png");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+  min-height: 300vh;
+  padding-left: 60%;
+  padding-top: 23%;
+  color: #1f1847;
+}
+.main2 {
+  background-image: url("../image/heart.avif");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
