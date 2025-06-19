@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { auth, db } from "../firebase";
-import Navbar from "../components/Navbar";
-import OtherPick from "../components/other-pick.jsx";
-import "../styles/recommend.css";
+import { db } from "../firebase";
+import useAuth from "../hooks/useAuth";
+import { Box, Container, Typography } from "@mui/material";
+import RecommendCard from "../components/ui/RecommendCard";
+
 
 // マッチ度計算関数
 function calculateMatchRate(userA, userB) {
@@ -17,18 +18,26 @@ function calculateMatchRate(userA, userB) {
 
   // 趣味の共通点で最大2点
   if (Array.isArray(userA.hobbies) && Array.isArray(userB.hobbies)) {
-    const commonHobbies = userA.hobbies.filter(hobby => userB.hobbies.includes(hobby));
+    const commonHobbies = userA.hobbies.filter((hobby) =>
+      userB.hobbies.includes(hobby)
+    );
     score += Math.min(commonHobbies.length, 2);
   }
 
   // コース共通で1点
   if (Array.isArray(userA.courses) && Array.isArray(userB.courses)) {
-    const commonCourses = userA.courses.filter(course => userB.courses.includes(course));
+    const commonCourses = userA.courses.filter((course) =>
+      userB.courses.includes(course)
+    );
     if (commonCourses.length > 0) score += 1;
   }
 
   // 大学一致で1点
-  if (userA.university && userB.university && userA.university === userB.university) {
+  if (
+    userA.university &&
+    userB.university &&
+    userA.university === userB.university
+  ) {
     score += 1;
   }
 
@@ -40,21 +49,15 @@ function calculateMatchRate(userA, userB) {
   return Math.round((score / maxScore) * 100); // パーセントで返す
 }
 
-// 星を描画する関数
-function renderStars(rate) {
-  if (typeof rate !== 'number') return "☆☆☆☆☆";
-  const stars = Math.round((rate / 100) * 5); // 0〜5の整数に変換
-  return "★".repeat(stars) + "☆".repeat(5 - stars); // ★★★☆☆
-}
-
-export default function Recommend() {
+export default function TestRecommend() {
+  const { user } = useAuth();
   const [topUser, setTopUser] = useState(null);
   const [otherUsers, setOtherUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecommendedUsers = async () => {
-      const currentUserId = auth.currentUser?.uid;
+      const currentUserId = user.uid;
       console.log("1. currentUserId:", currentUserId);
 
       if (!currentUserId) {
@@ -107,36 +110,24 @@ export default function Recommend() {
   }
 
   return (
-    <div>
-      <Navbar />
-      <h1>あなたにおすすめ</h1>
+    <Container>
+      <Typography variant="h6" sx={{ fontWeight: "bold", mt: 2, mb: 2 }}>
+        あなたにおすすめ
+      </Typography>
 
-      {topUser && (
-        <div className="badge-top-pick">
-          <img src={topUser.avatarUrl || "/default.png"} alt={topUser.name} />
-          <div>
-            <div className="match-rate">
-              <span>マッチ度: {topUser.matchRate}%</span>
-              <span className="match-stars">{renderStars(topUser.matchRate)}</span>
-            </div>
-            <h3><strong>名前:</strong> {topUser.name}</h3>
-            <h3><strong>出身:</strong> {topUser.hometown}</h3>
-            <h3><strong>MBTI:</strong> {topUser.mbti}</h3>
-            <h3>大学: {topUser.university}</h3>
-            <h3>コース: {Array.isArray(topUser.courses) ? topUser.courses.join("、") : topUser.courses}</h3>
-            <h3>趣味: {Array.isArray(topUser.hobbies) ? topUser.hobbies.join("、") : topUser.hobbies}</h3>
-            <h3>アピール: {topUser.comment}</h3>
-          </div>
-        </div>
-      )}
+      {topUser && <RecommendCard user={topUser} />}
 
-      <h2>その他おすすめ</h2>
-      <div className="all-badge-other-pick">
-        {otherUsers.length > 0 && <OtherPick user={otherUsers[0]} />}
-        {otherUsers.length > 1 && <OtherPick user={otherUsers[1]} />}
-        {otherUsers.length > 2 && <OtherPick user={otherUsers[2]} />}
-      </div>
-    </div>
+      <Typography variant="h6" sx={{ fontWeight: "bold", mt: 2, mb: 2 }}>
+        その他おすすめ
+      </Typography>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        {otherUsers.map((user) => (
+          <RecommendCard key={user.id} user={user} />
+        ))}
+      </Box>
+    </Container>
   );
 }
+
+
 

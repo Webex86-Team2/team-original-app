@@ -1,0 +1,54 @@
+.avatar-container {
+  position: relative;
+  width: 8rem; /* w-32 */
+  height: 8rem; /* h-32 */
+}
+
+.avatar-frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px; /* rounded-full */
+  overflow: hidden;
+  border: 2px solid #d1d5db; /* border-gray-300 */
+  position: relative;
+}
+
+.avatar-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #f3f4f6; /* bg-gray-100 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af; /* text-gray-400 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+.avatar-button {
+  position: absolute !important;
+  bottom: 0;
+  right: 0;
+  width: 2.25rem; /* w-9 */
+  height: 2.25rem; /* h-9 */
+  border-radius: 9999px; /* rounded-full */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+  cursor: pointer;
+  background-color: #3b82f6 !important; /* bg-primary (青系を想定) */
+  min-width: unset !important; /* MUIのButtonが幅固定しがちなので解除 */
+  padding: 0 !important;
+}
+
+.camera-icon {
+  width: 1.25rem; /* w-5 */
+  height: 1.25rem; /* h-5 */
+}
+
+.hidden-input {
+  display: none;
+}

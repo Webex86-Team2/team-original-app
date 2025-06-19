@@ -17,7 +17,7 @@
 
 .chat-box {
   background-color: #ffffff;
-  height: 400px;
+  height: 550px;
   overflow-y: auto;
   padding: 1rem;
   border-radius: 10px;
@@ -31,6 +31,8 @@
   display: flex;
   align-items: flex-start;
   max-width: 80%;
+  border: none;
+  background-color: transparent;
 }
 
 .chat-message.left {
@@ -142,4 +144,9 @@
   margin-top: 4px;
   justify-content: flex-start;
   gap: 4px;
+}
+
+.stamp-option {
+  background-color: transparent;
+  border: none;
 }
